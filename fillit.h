@@ -15,25 +15,25 @@
 
 typedef enum	e_minotype
 {
-	SQUARE,
 	LINE_V,
 	LINE_H,
-	T_UP,
-	T_LEFT,
-	T_DOWN,
-	T_RIGHT,
 	L_DOWN,
-	L_LEFT,
-	L_UP,
-	L_RIGHT,
+	T_DOWN,
 	RL_DOWN,
-	RL_LEFT,
-	RL_UP,
+	SQUARE,
 	RL_RIGHT,
-	S_H,
-	S_V,
 	Z_H,
-	Z_V
+	L_LEFT,
+	T_RIGHT,
+	RL_UP,
+	L_RIGHT,
+	S_V,
+	S_H,
+	T_UP,
+	Z_V,
+	T_LEFT,
+	L_UP,
+	RL_LEFT
 }				t_minotype;
 
 typedef struct	s_blank
