@@ -6,7 +6,7 @@
 /*   By: myoung <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/28 18:55:06 by myoung            #+#    #+#             */
-/*   Updated: 2016/09/28 22:07:57 by myoung           ###   ########.fr       */
+/*   Updated: 2016/09/28 22:50:22 by myoung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 #include <sys/uio.h>
 #include <unistd.h>
 #include <fcntl.h>
-
-#include <string.h>
-char	*ft_memcpy(void *dst, const void *src, size_t n);
 
 #include <stdio.h>
 
@@ -29,7 +26,12 @@ void	fillmino(char *buf)
 	{
 		if (i % 4 == 0 && buf[i] != '#' && buf[i + 1] != '#'
 				&& buf[i + 2] != '#' && buf[i + 3] != '#')
-			ft_memcpy(buf + i, "xxxx", 4);
+		{
+			buf[i] = 'x';
+			buf[i + 1] = 'x';
+			buf[i + 2] = 'x';
+			buf[i + 3] = 'x';
+		}
 		if (i < 4 && buf[i] != '#'
 			   	&& buf[i + 4] != '#'
 				&& buf[i + 8] != '#' && buf[i + 12] != '#')
