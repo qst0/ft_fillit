@@ -50,7 +50,7 @@ typedef struct	s_minos
 	t_blank			blanks[2];
 }				t_minos;
 
-t_minos			*g_minos = {
+t_minos			g_minos[19] = {
 	{LINE_V, 0, 3, {0, 0}},
 	{LINE_H, 3, 0, {0, 0}},
 	{L_DOWN, 2, 1, {{1, 1}, {1, 2}}},
@@ -69,8 +69,7 @@ t_minos			*g_minos = {
 	{Z_V, 1, 2, {{0, 0}, {2, 1}}},
 	{T_LEFT, 1, 2, {{0, 0}, {2, 0}}},
 	{L_UP, 2, 1, {{0, 0}, {0, 1}}},
-	{RL_LEFT, 1, 2, {{0, 0}, {1, 0}}},
-	0
-}
+	{RL_LEFT, 1, 2, {{0, 0}, {1, 0}}}
+};
 
 #endif
