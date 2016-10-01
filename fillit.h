@@ -19,13 +19,13 @@ typedef enum	e_minotype
 	LINE_H,
 	L_DOWN,
 	T_DOWN,
-	RL_DOWN,
+	J_DOWN,
 	SQUARE,
-	RL_RIGHT,
+	J_RIGHT,
 	Z_H,
 	L_LEFT,
 	T_RIGHT,
-	RL_UP,
+	J_UP,
 	L_RIGHT,
 	S_V,
 	S_H,
@@ -33,7 +33,7 @@ typedef enum	e_minotype
 	Z_V,
 	T_LEFT,
 	L_UP,
-	RL_LEFT
+	J_LEFT
 }				t_minotype;
 
 typedef struct	s_blank
@@ -55,13 +55,13 @@ t_minos			g_minos[19] = {
 	{LINE_H, 3, 0, {0, 0}},
 	{L_DOWN, 2, 1, {{1, 1}, {1, 2}}},
 	{T_DOWN, 2, 1, {{1, 0}, {1, 2}}},
-	{RL_DOWN, 2, 1, {{1, 0}, {1, 1}}},
+	{J_DOWN, 2, 1, {{1, 0}, {1, 1}}},
 	{SQUARE, 1, 1, {0, 0}},
-	{RL_RIGHT, 1, 2, {{1, 1}, {1, 2}}},
+	{J_RIGHT, 1, 2, {{1, 1}, {1, 2}}},
 	{Z_H, 2, 1, {{1, 0}, {0, 2}}},
 	{L_LEFT, 1, 2, {{1, 0}, {2, 0}}},
 	{T_RIGHT, 1, 2, {{0, 1}, {2, 1}}},
-	{RL_UP, 2, 1, {{0, 1}, {0, 2}}},
+	{J_UP, 2, 1, {{0, 1}, {0, 2}}},
 	{L_RIGHT, 1, 2, {{0, 1}, {1, 1}}},
 	{S_V, 1, 2, {{0, 1}, {2, 0}}},
 	{S_H, 2, 1, {{0, 0}, {1, 2}}},
@@ -69,7 +69,7 @@ t_minos			g_minos[19] = {
 	{Z_V, 1, 2, {{0, 0}, {2, 1}}},
 	{T_LEFT, 1, 2, {{0, 0}, {2, 0}}},
 	{L_UP, 2, 1, {{0, 0}, {0, 1}}},
-	{RL_LEFT, 1, 2, {{0, 0}, {1, 0}}}
+	{J_LEFT, 1, 2, {{0, 0}, {1, 0}}}
 };
 
 #endif
