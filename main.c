@@ -6,7 +6,7 @@
 /*   By: myoung <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/28 18:55:06 by myoung            #+#    #+#             */
-/*   Updated: 2016/09/30 16:03:42 by myoung           ###   ########.fr       */
+/*   Updated: 2016/10/01 12:10:14 by myoung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,16 @@
 #include <stdlib.h>
 
 #include <stdio.h>
+
+void	mino_error()
+{
+	printf("error");
+	exit(0);
+}
+
+/*
+** Fill the fully blank rows and columns with x's
+*/
 
 void	fillmino(char *buf)
 {
@@ -65,12 +75,13 @@ int		mino_valid(char* buf)
 		i++;
 	}
 	if (count != 4)
-	{
-		printf("Not 4\n");
 		return (0);
-	}
 	return (1);
 }
+
+/*
+** Calculate the offset caused by blank spots in a filled mino
+*/
 
 int		mino_offset(char *buf)
 {
@@ -82,6 +93,10 @@ int		mino_offset(char *buf)
 	return fill_offset;
 }
 
+/*
+** Return the location of the blanks in a mino relative to the fill_offset
+*/
+
 int		*mino_blanks(char* buf, int fill_offset)
 {
 	int		*blanks;
@@ -90,7 +105,6 @@ int		*mino_blanks(char* buf, int fill_offset)
 	blanks = (int*)malloc(sizeof(int) * 2);
 	blanks[0] = -1;
 	blanks[1] = -1;
-	printf("fill_offset: %d\n", fill_offset);
 	i = 0;
 	while ((blanks[0] == -1 || blanks[1] == -1) && i < 16 - fill_offset)
 	{
@@ -100,25 +114,49 @@ int		*mino_blanks(char* buf, int fill_offset)
 			blanks[1] = i;
 		i++;
 	}
-	printf("blank 1: %d\n", blanks[0]);
-	printf("blank 2: %d\n", blanks[1]);
 	return (blanks);
 }
+
+/*
+** Return the minotype of a mino
+*/
 
 t_minotype	idmino(char *buf)
 {
 	int		fill_offset;
 	int		*blanks;
+	int		mino_id;
+	int		sum;
+	int		dif;
 
 	fill_offset = mino_offset(buf);
 	blanks = mino_blanks(buf, fill_offset);
 	if (blanks[0] == -1)
 	{
-		return(SQUARE); //We have a sq or line
+		if (buf[5 + fill_offset] == '#') 
+			return (SQUARE);
+		else if (buf[2 + fill_offset] == '#')
+			return (LINE_H);
+		else
+			return (LINE_V);
 	}
 	else
+	{
+		dif = blanks[1] - blanks[0];
+		sum = blanks[0] + blanks[1];	
+		printf("dif: %d\n", dif);
+		printf("sum: %d\n", sum);
+		if (dif == 1)
+			printf("We have an L or J, L or R\n");
+		if (dif == 4)
+			printf("We have an L or J, U or D\n");
+	}
 		return(L_DOWN); //We have something else
 }
+
+/*
+** Read a mino from the file and return if it was a success or not
+*/
 
 int		readmino(int fd, char* buf)
 {
@@ -131,11 +169,11 @@ int		readmino(int fd, char* buf)
 			if (buf[offset] == '.' || buf[offset] == '#')
 				offset++;
 			else if (buf[offset] != '\n')
-				return (0); //FAILED BAD CHAR
+				mino_error(); //FAILED BAD CHAR
 		}
 		else if (buf[offset] != '\n')
 		{	
-			return (0); //FAILED, LINE TOO LONG
+			mino_error(); //FAILED, LINE TOO LONG
 		}
 		//printf("%d\n", buf[offset]);
 	}
@@ -148,6 +186,16 @@ int		readmino(int fd, char* buf)
 		return (0);
 	return (1);
 }
+
+/*
+** Read all the minos from a file
+*/
+
+void	readminos(fd)
+{
+
+}
+
 
 int		main(int argc, char **argv)
 {
@@ -171,6 +219,7 @@ int		main(int argc, char **argv)
 			if(readmino(fd, buf))
 			{
 				printf("id: %d\n", idmino(buf)); //ID MINO
+				//ADD MINO TO ARRAY
 				if(read(fd, buf, 2) == -1)
 					return (0); //error nothing left to read;
 			}
