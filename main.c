@@ -6,7 +6,7 @@
 /*   By: myoung <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/28 18:55:06 by myoung            #+#    #+#             */
-/*   Updated: 2016/10/01 12:10:14 by myoung           ###   ########.fr       */
+/*   Updated: 2016/10/01 15:49:10 by myoung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,27 +131,34 @@ t_minotype	idmino(char *buf)
 
 	fill_offset = mino_offset(buf);
 	blanks = mino_blanks(buf, fill_offset);
-	if (blanks[0] == -1)
-	{
-		if (buf[5 + fill_offset] == '#') 
-			return (SQUARE);
-		else if (buf[2 + fill_offset] == '#')
-			return (LINE_H);
-		else
-			return (LINE_V);
-	}
+	if (blanks[0] == -1 && buf[5 + fill_offset] == '#') 
+		return (SQUARE);
+	else if (blanks[0] == -1) 
+		return (buf[2 + fill_offset] == '#' ? LINE_H : LINE_V);
+	dif = blanks[1] - blanks[0];
+	sum = blanks[1] + blanks[0];	
+	printf("dif: %d\n", dif);
+	printf("sum: %d\n", sum);
+	if (dif == 1 && sum > 8)
+		return (sum == 9 ? J_DOWN : L_DOWN);
+	else if (dif == 1)
+		return (sum == 1 ? L_UP : J_UP);
+	if (dif == 4 && sum > 11)
+		return (sum == 12 ? L_LEFT : J_RIGHT);
+	else if (dif == 4)
+		return (sum == 4 ? J_LEFT : L_RIGHT);
+	if (dif == 2 && sum == 2)
+		return (T_UP);
+	else if (dif == 2)
+		return (sum == 10 ? T_DOWN : Z_H);
+	if (dif == 8)
+		return (sum == 8 ? T_LEFT : T_RIGHT);
+	if (dif == 6)
+		return (S_H);
+	if (dif == 7)
+		return (S_V);
 	else
-	{
-		dif = blanks[1] - blanks[0];
-		sum = blanks[0] + blanks[1];	
-		printf("dif: %d\n", dif);
-		printf("sum: %d\n", sum);
-		if (dif == 1)
-			printf("We have an L or J, L or R\n");
-		if (dif == 4)
-			printf("We have an L or J, U or D\n");
-	}
-		return(L_DOWN); //We have something else
+		return (Z_V);
 }
 
 /*
@@ -195,7 +202,6 @@ void	readminos(fd)
 {
 
 }
-
 
 int		main(int argc, char **argv)
 {
