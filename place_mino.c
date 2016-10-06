@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "fillit.h"
+
 #define HEX 0x8000000000000000
 #define GETB(z) ((g_grid[z / 64] << (z % 64) & HEX) == HEX)
 
@@ -49,7 +51,7 @@ int		backtrack(int sqr_size, int offset)
 	int i;
 
 	i = -1;
-	if (GETB(z) && g_left_to_place > 0)
+	if (GETB(offset) && g_left_to_place > 0)
 	{
 		while (g_minos[++i].type != END)
 		{
@@ -75,9 +77,4 @@ int		backtrack(int sqr_size, int offset)
 		}
 	}
 	return (1);
-}
-
-void	fillit(void)
-{
-	g_left_to_place = /* num_minos */;
 }

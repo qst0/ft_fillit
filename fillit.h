@@ -84,4 +84,7 @@ extern t_mino	*g_minos;
 extern t_ull	*g_grid;
 extern uint8_t	g_left_to_place;
 
+
+int		backtrack(int sqr_size, int offset);
+
 #endif
