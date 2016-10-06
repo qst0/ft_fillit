@@ -47,7 +47,7 @@ typedef struct	s_mino
 	t_ull			stamp;
 }				t_mino;
 
-t_mino			g_minos[20] = {
+t_mino			g_all_minos[20] = {
 	{LINE_V, 1, 4, 0x8000800080008000},
 	{LINE_H, 4, 1, 0xF000000000000000},
 	{L_DOWN, 3, 2, 0xE000800000000000},
@@ -69,5 +69,7 @@ t_mino			g_minos[20] = {
 	{J_LEFT, 2, 3, 0x40004000C0000000},
 	{END, 0, 0, 0}
 };
+
+extern t_mino	*g_minos;
 
 #endif
