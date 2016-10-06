@@ -39,12 +39,6 @@ typedef enum	e_minotype
 	END
 }				t_minotype;
 
-typedef struct	s_blank
-{
-	unsigned int	row:2;
-	unsigned int	col:2;
-}				t_blank;
-
 typedef struct	s_minos
 {
 	t_minotype		type;
