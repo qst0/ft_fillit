@@ -13,7 +13,7 @@
 #ifndef FILLIT_H
 # define FILLIT_H
 
-typedef t_ull unsigned long long;
+typedef unsigned long long t_ull;
 
 typedef enum	e_minotype
 {
@@ -39,12 +39,6 @@ typedef enum	e_minotype
 	END
 }				t_minotype;
 
-typedef struct	s_blank
-{
-	unsigned int	row:2;
-	unsigned int	col:2;
-}				t_blank;
-
 typedef struct	s_minos
 {
 	t_minotype		type;
@@ -53,7 +47,7 @@ typedef struct	s_minos
 	t_ull			stamp;
 }				t_minos;
 
-t_minos			g_minos[19] = {
+t_minos			g_minos[20] = {
 	{LINE_V, 0, 3, 0x8000800080008000},
 	{LINE_H, 3, 0, 0xF000000000000000},
 	{L_DOWN, 2, 1, 0xE000800000000000},
@@ -73,7 +67,7 @@ t_minos			g_minos[19] = {
 	{T_LEFT, 1, 2, 0x4000C00040000000},
 	{L_UP, 2, 1, 0x2000E00000000000},
 	{J_LEFT, 1, 2, 0x40004000C0000000},
-	{END, 0, 0, 0};
+	{END, 0, 0, 0}
 };
 
 #endif
