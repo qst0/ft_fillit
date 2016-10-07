@@ -6,7 +6,7 @@
 /*   By: myoung <myoung@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 12:19:47 by myoung            #+#    #+#             */
-/*   Updated: 2016/10/07 16:20:37 by myoung           ###   ########.fr       */
+/*   Updated: 2016/10/07 16:37:27 by myoung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,14 +105,14 @@ void		read_minos(int fd)
 	{
 		cur_mino = mino_id(buf);
 		
-		g_minos[i] = cur_mino;
+		g_minos[i] = g_all_minos[cur_mino];
 		i++;
 	}
 	cur_mino = mino_id(buf);
-	g_minos[i] = cur_mino;
+	g_minos[i] = g_all_minos[cur_mino];
 	i++;
 	if (i < 26)
-		g_minos[i] = END;
+		g_minos[i] = g_all_minos[END];
 	free(buf);
 }
 
@@ -124,17 +124,17 @@ int		main(int argc, char **argv)
 	int			fd;
 	t_minotype	*minos;
 
-	g_minos = (t_minotype*)malloc(26);
+	g_minos = (t_mino*)malloc(26);
 	g_left_to_place = 0;
 	if (argc != 2)
 		return (0);
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
 		return (1);
-	while(*g_minos != END)
+	while(g_minos->type != END)
 	{
 		g_left_to_place++;
-		ft_putnbr(*g_minos);
+		ft_putnbr(g_minos->type);
 		ft_putchar('\n');
 		g_minos++;
 	}
