@@ -54,7 +54,8 @@ typedef struct	s_mino
 typedef struct	s_decode
 {
 	t_minotype	type;
-	int			offset_index;
+	uint8_t		index;
+	int			offset;
 }				t_decode;
 
 t_mino			g_all_minos[20] = {

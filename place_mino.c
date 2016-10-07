@@ -20,8 +20,9 @@
 #define CHECK2 (((mino->stamp << (64 - offset % 64)) & g_grid[GROSS]) == 0)
 
 uint8_t	g_left_to_place;
+uint8_t	g_sqr_size;
 
-int		attempt_place(int sqr_size, int offset, t_mino *mino)
+int		attempt_place(int offset, t_mino *mino)
 {
 	if (CHECK1 && CHECK2)
 	{
@@ -32,7 +33,7 @@ int		attempt_place(int sqr_size, int offset, t_mino *mino)
 		mino->placed = 1;
 		g_left_to_place--;
 		//	Try to move forward with it
-		if (backtrack(sqr_size, offset + 1))
+		if (backtrack(g_sqr_size, offset + 1))
 			return (1);
 		else
 		{
@@ -46,7 +47,7 @@ int		attempt_place(int sqr_size, int offset, t_mino *mino)
 	return (0);
 }
 
-int		backtrack(int sqr_size, int offset)
+int		backtrack(int offset)
 {
 	int i;
 
@@ -57,14 +58,14 @@ int		backtrack(int sqr_size, int offset)
 		{
 			if (g_minos[i].placed || !g_minos[i].added_blanks)
 				continue ;
-			if (attempt_place(sqr_size, offset, &g_minos[i]))
+			if (attempt_place(g_sqr_size, offset, &g_minos[i]))
 				return (1);
 		}
 		//	If we are here then the six didn't work, lets move forward
-		if ((offset + 1) % sqr_size != 0)
-			return (backtrack(sqr_size, offset + 1));
-		else if ((offset + 1) / sqr_size > offset / sqr_size)
-			return (backtrack(sqr_size, offset + (64 - sqr_size)));
+		if ((offset + 1) % g_sqr_size != 0)
+			return (backtrack(g_sqr_size, offset + 1));
+		else
+			return (backtrack(g_sqr_size, offset + (64 - g_sqr_size)));
 	}
 	else if (g_left_to_place > 0)
 	{
@@ -72,7 +73,7 @@ int		backtrack(int sqr_size, int offset)
 		{
 			if (g_minos[i].placed)
 				continue ;
-			if (attempt_place(sqr_size, offset, &g_minos[i]))
+			if (attempt_place(g_sqr_size, offset, &g_minos[i]))
 				return (1);
 		}
 	}
