@@ -6,7 +6,7 @@
 /*   By: myoung <myoung@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 12:19:47 by myoung            #+#    #+#             */
-/*   Updated: 2016/10/07 13:41:48 by myoung           ###   ########.fr       */
+/*   Updated: 2016/10/07 16:20:37 by myoung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,51 +93,50 @@ int		read_mino(int fd, char *buf)
 ** Read all the minos from a file
 */
 
-t_minotype		*read_minos(int fd)
+void		read_minos(int fd)
 {
 	int			i;
 	char		*buf;
 	t_minotype	cur_mino;
-	t_minotype	*minos;
 
 	i = 0;	
 	buf = (char*)malloc(22);
-	minos = (t_minotype*)malloc(26);
 	while (read_mino(fd, buf))
 	{
 		cur_mino = mino_id(buf);
 		
-		minos[i] = cur_mino;
+		g_minos[i] = cur_mino;
 		i++;
 	}
 	cur_mino = mino_id(buf);
-	minos[i] = cur_mino;
+	g_minos[i] = cur_mino;
 	i++;
 	if (i < 26)
-		minos[i] = END;
-	return (minos);
+		g_minos[i] = END;
+	free(buf);
 }
 
 uint8_t g_left_to_place;
+t_mino	*g_minos;
 
 int		main(int argc, char **argv)
 {
 	int			fd;
 	t_minotype	*minos;
 
+	g_minos = (t_minotype*)malloc(26);
 	g_left_to_place = 0;
 	if (argc != 2)
 		return (0);
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
 		return (1);
-	minos = read_minos(fd);
-	while(*minos != END)
+	while(*g_minos != END)
 	{
 		g_left_to_place++;
-		ft_putnbr(*minos);
+		ft_putnbr(*g_minos);
 		ft_putchar('\n');
-		minos++;
+		g_minos++;
 	}
 	ft_putstr("left_to_place: ");
 	ft_putnbr(g_left_to_place);
