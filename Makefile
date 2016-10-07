@@ -6,7 +6,7 @@
 #    By: myoung <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/08/22 12:51:39 by myoung            #+#    #+#              #
-#    Updated: 2016/10/07 16:32:35 by myoung           ###   ########.fr        #
+#    Updated: 2016/10/07 16:41:21 by myoung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ OBJECTS		=	$(FILENAMES:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJECTS)
+$(NAME): $(OBJECTS) libft.a
 	$(CC) $^ -o $@
 
 clean:
