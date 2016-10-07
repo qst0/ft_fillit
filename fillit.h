@@ -84,6 +84,7 @@ t_mino			g_all_minos[20] = {
 extern t_mino	*g_minos;
 extern t_ull	*g_grid;
 extern uint8_t	g_left_to_place;
+extern uint8_t	g_sqr_size;
 
 
 int		backtrack(int sqr_size, int offset);
