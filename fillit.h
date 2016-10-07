@@ -13,6 +13,12 @@
 #ifndef FILLIT_H
 # define FILLIT_H
 
+# include "libft/libft.h"
+# include <sys/types.h>
+# include <sys/uio.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <stdlib.h>
 # include <stdlib.h>
 
 typedef unsigned long long t_ull;
@@ -89,7 +95,7 @@ extern t_decode	*g_decodes;
 extern uint8_t	g_decode_index;
 
 
-int		backtrack(int sqr_size, int offset);
+int		backtrack(int offset);
 void	print_minos(void);
 void	fillit(void);
 
