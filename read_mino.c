@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_mino.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myoung <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: myoung <myoung@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/05 10:02:36 by myoung            #+#    #+#             */
-/*   Updated: 2016/10/05 17:11:03 by myoung           ###   ########.fr       */
+/*   Created: 2016/10/07 12:19:47 by myoung            #+#    #+#             */
+/*   Updated: 2016/10/07 12:20:02 by myoung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,8 @@ int		main(int argc, char **argv)
 {
 	int			fd;
 	t_minotype	*minos;
-	
+
+	g_left_to_place = 0;
 	if (argc != 2)
 		return (0);
 	fd = open(argv[1], O_RDONLY);
@@ -131,8 +132,12 @@ int		main(int argc, char **argv)
 	minos = read_minos(fd);
 	while(*minos != END)
 	{
+		g_left_to_place++;
 		ft_putnbr(*minos);
 		ft_putchar('\n');
 		minos++;
 	}
+	ft_putstr("left_to_place: ");
+	ft_putnbr(g_left_to_place);
+	ft_putchar('\n');
 }
