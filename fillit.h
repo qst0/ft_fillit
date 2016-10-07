@@ -6,7 +6,7 @@
 /*   By: palatorr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/28 16:58:12 by palatorr          #+#    #+#             */
-/*   Updated: 2016/10/05 17:14:46 by myoung           ###   ########.fr       */
+/*   Updated: 2016/10/07 13:04:27 by myoung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ extern t_mino	*g_minos;
 extern t_ull	*g_grid;
 extern uint8_t	g_left_to_place;
 extern uint8_t	g_sqr_size;
+extern t_decode	*g_decodes;
 
 
 int		backtrack(int sqr_size, int offset);

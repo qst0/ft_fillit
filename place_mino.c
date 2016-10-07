@@ -6,7 +6,7 @@
 /*   By: palatorr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/06 13:15:37 by palatorr          #+#    #+#             */
-/*   Updated: 2016/10/06 13:15:38 by palatorr         ###   ########.fr       */
+/*   Updated: 2016/10/07 12:47:34 by myoung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 uint8_t	g_left_to_place;
 uint8_t	g_sqr_size;
 
-int		attempt_place(int offset, t_mino *mino)
+int		attempt_place(int offset, t_mino *mino, uint8_t index)
 {
 	if (CHECK1 && CHECK2)
 	{
@@ -33,7 +33,7 @@ int		attempt_place(int offset, t_mino *mino)
 		mino->placed = 1;
 		g_left_to_place--;
 		//	Try to move forward with it
-		if (backtrack(g_sqr_size, offset + 1))
+		if (backtrack(offset + 1))
 			return (1);
 		else
 		{
@@ -49,7 +49,7 @@ int		attempt_place(int offset, t_mino *mino)
 
 int		backtrack(int offset)
 {
-	int i;
+	uint8_t i;
 
 	i = -1;
 	if (GETB(offset) && g_left_to_place > 0)
@@ -58,14 +58,14 @@ int		backtrack(int offset)
 		{
 			if (g_minos[i].placed || !g_minos[i].added_blanks)
 				continue ;
-			if (attempt_place(g_sqr_size, offset, &g_minos[i]))
+			if (attempt_place(offset, &g_minos[i], i))
 				return (1);
 		}
 		//	If we are here then the six didn't work, lets move forward
 		if ((offset + 1) % g_sqr_size != 0)
-			return (backtrack(g_sqr_size, offset + 1));
+			return (backtrack(offset + 1));
 		else
-			return (backtrack(g_sqr_size, offset + (64 - g_sqr_size)));
+			return (backtrack(offset + (64 - g_sqr_size)));
 	}
 	else if (g_left_to_place > 0)
 	{
@@ -73,7 +73,7 @@ int		backtrack(int offset)
 		{
 			if (g_minos[i].placed)
 				continue ;
-			if (attempt_place(g_sqr_size, offset, &g_minos[i]))
+			if (attempt_place(offset, &g_minos[i], i))
 				return (1);
 		}
 	}
