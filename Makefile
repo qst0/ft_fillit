@@ -12,7 +12,7 @@
 
 NAME		=	fillit
 CC			=	gcc
-CFLAGS		?=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra -Werror
 
 FILENAMES	=	read_mino.c place_mino.c print_mino.c
 
@@ -23,8 +23,8 @@ OBJECTS		=	$(FILENAMES:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJECTS) libft.a
-	$(CC) $^ -o $@
+$(NAME): $(OBJECTS) libft/libft.a
+	$(CC) $(CFLAGS) $^ -o $@
 
 clean:
 	@rm -rf $(OBJECTS)
@@ -35,4 +35,4 @@ fclean: clean
 re: fclean all
 
 %.o: %.c
-	gcc -c $< -o $@
+	gcc $(CFLAGS) -c $< -o $@

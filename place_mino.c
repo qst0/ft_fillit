@@ -23,8 +23,9 @@ uint8_t		g_left_to_place;
 uint8_t		g_sqr_size;
 uint8_t		g_decode_index;
 t_decode	*g_decodes;
+t_ull		*g_grid;
 
-t_ull		*g_inits = {
+t_ull		g_inits[13] = {
 	0,
 	0,
 	0,
@@ -90,10 +91,12 @@ int		backtrack(int offset)
 	}
 	else if (g_left_to_place > 0)
 		while (g_minos[++i].type != END)
+		{
 			if (g_minos[i].placed)
 				continue ;
 			else if (attempt_place(offset, &g_minos[i], i))
 				return (1);
+		}
 	return (1);
 }
 
@@ -121,11 +124,9 @@ void	fillit(void)
 		g_decodes[i].type = END;
 	g_sqr_size = find_next_square(g_left_to_place * 4);
 	i = -1;
+	g_grid = (t_ull*)malloc(sizeof(t_ull) * 4);
 	while (++i < 4)
-	{
-		g_grid[i] = (t_ull*)malloc(sizeof(t_ull));
 		g_grid[i] = g_inits[g_sqr_size];
-	}
 	g_grid[g_sqr_size / 4] |= 0xFFFF000000000000 >> (g_sqr_size % 4) * 16;
 	while (!backtrack(0))
 	{

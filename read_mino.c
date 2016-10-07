@@ -10,13 +10,30 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
-#include "fillit.h"
-#include <sys/types.h>
-#include <sys/uio.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <stdlib.h>
+# include "fillit.h"
+
+t_mino			g_all_minos[20] = {
+	{LINE_V, 49, 0, 1, 0, 0x8000800080008000},
+	{LINE_H, 4, 0, 4, 0, 0xF000000000000000},
+	{L_DOWN, 17, 0, 3, 0, 0xE000800000000000},
+	{T_DOWN, 18, 0, 3, 0, 0xE000400000000000},
+	{J_DOWN, 19, 0, 3, 0, 0xE000200000000000},
+	{SQUARE, 18, 0, 2, 0, 0xC000C00000000000},
+	{J_RIGHT, 33, 0, 2, 0, 0xC000800080000000},
+	{Z_H, 19, 0, 2, 0, 0xC000600000000000},
+	{L_LEFT, 34, 0, 2, 0, 0xC000400040000000},
+	{T_RIGHT, 34, 0, 1, 0, 0x8000C00080000000},
+	{J_UP, 19, 0, 1, 0, 0x8000E00000000000},
+	{L_RIGHT, 34, 0, 1, 0, 0x80008000C0000000},
+	{S_V, 34, 0, 1, 0, 0x8000C00040000000},
+	{S_H, 18, 1, 3, 0, 0x6000C00000000000},
+	{T_UP, 19, 1, 2, 0, 0x4000E00000000000},
+	{Z_V, 33, 1, 2, 0, 0x4000C00080000000},
+	{T_LEFT, 34, 1, 2, 0, 0x4000C00040000000},
+	{L_UP, 19, 2, 3, 0, 0x2000E00000000000},
+	{J_LEFT, 34, 1, 2, 0, 0x40004000C0000000},
+	{END, 0, 0, 0, 0, 0}
+};
 
 void	mino_error(void)
 {
@@ -104,7 +121,6 @@ void		read_minos(int fd)
 	while (read_mino(fd, buf))
 	{
 		cur_mino = mino_id(buf);
-		
 		g_minos[i] = g_all_minos[cur_mino];
 		i++;
 	}
@@ -122,7 +138,6 @@ t_mino	*g_minos;
 int		main(int argc, char **argv)
 {
 	int			fd;
-	t_minotype	*minos;
 
 	g_minos = (t_mino*)malloc(26);
 	g_left_to_place = 0;
