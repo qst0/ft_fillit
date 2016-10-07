@@ -86,8 +86,11 @@ extern t_ull	*g_grid;
 extern uint8_t	g_left_to_place;
 extern uint8_t	g_sqr_size;
 extern t_decode	*g_decodes;
+extern uint8_t	g_decode_index;
 
 
 int		backtrack(int sqr_size, int offset);
+void	print_minos(void);
+void	fillit(void);
 
 #endif
