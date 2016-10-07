@@ -6,7 +6,7 @@
 /*   By: myoung <myoung@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 12:19:47 by myoung            #+#    #+#             */
-/*   Updated: 2016/10/07 12:20:02 by myoung           ###   ########.fr       */
+/*   Updated: 2016/10/07 13:41:48 by myoung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,8 @@ t_minotype		*read_minos(int fd)
 		minos[i] = END;
 	return (minos);
 }
+
+uint8_t g_left_to_place;
 
 int		main(int argc, char **argv)
 {
