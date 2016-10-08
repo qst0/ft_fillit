@@ -12,6 +12,10 @@
 
 #include "fillit.h"
 
+
+#include <stdio.h>
+
+
 #define HEX 0x8000000000000000
 #define GETB(z) ((g_grid[z / 64] << (z % 64) & HEX) == HEX)
 
@@ -76,6 +80,7 @@ int		backtrack(int offset)
 	uint8_t i;
 
 	i = -1;
+	printf("We backtrackin'\n");
 	if (GETB(offset) && g_left_to_place > 0)
 	{
 		while (g_minos[++i].type != END)
@@ -90,13 +95,17 @@ int		backtrack(int offset)
 			return (backtrack(offset + (64 - g_sqr_size)));
 	}
 	else if (g_left_to_place > 0)
+	{
+		printf("We testin' w/ %d\n", (int)g_minos[i + 5].total_offset);
 		while (g_minos[++i].type != END)
 		{
+			printf("We gon' attempt now\n");
 			if (g_minos[i].placed)
 				continue ;
-			else if (attempt_place(offset, &g_minos[i], i))
+			if (attempt_place(offset, &g_minos[i], i))
 				return (1);
 		}
+	}
 	return (1);
 }
 
@@ -130,6 +139,7 @@ void	fillit(void)
 	g_grid[g_sqr_size / 4] |= 0xFFFF000000000000 >> (g_sqr_size % 4) * 16;
 	while (!backtrack(0))
 	{
+		printf("GOING UP IN SIZE MY MAN\n");
 		g_sqr_size++;
 		i = -1;
 		while (++i < 4)

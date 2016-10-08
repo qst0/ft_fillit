@@ -76,5 +76,4 @@ void	print_minos(void)
 		write(1, "\n", 1);
 		buf += g_sqr_size;
 	}
-	free(buf);
 }

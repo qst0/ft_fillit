@@ -12,6 +12,10 @@
 
 # include "fillit.h"
 
+
+#include <stdio.h>
+
+
 t_mino			g_all_minos[20] = {
 	{LINE_V, 49, 0, 1, 0, 0x8000800080008000},
 	{LINE_H, 4, 0, 4, 0, 0xF000000000000000},
@@ -34,6 +38,9 @@ t_mino			g_all_minos[20] = {
 	{J_LEFT, 34, 1, 2, 0, 0x40004000C0000000},
 	{END, 0, 0, 0, 0, 0}
 };
+
+uint8_t g_left_to_place;
+t_mino	*g_minos;
 
 void	mino_error(void)
 {
@@ -118,42 +125,44 @@ void		read_minos(int fd)
 
 	i = 0;	
 	buf = (char*)malloc(22);
+	ft_bzero(buf, 22);
 	while (read_mino(fd, buf))
 	{
 		cur_mino = mino_id(buf);
+		printf("ID: %d\n", cur_mino);
 		g_minos[i] = g_all_minos[cur_mino];
+		printf("Type: %d\n", g_minos[i].type);
+		ft_bzero(buf, 22);
 		i++;
 	}
 	cur_mino = mino_id(buf);
 	g_minos[i] = g_all_minos[cur_mino];
 	i++;
-	if (i < 26)
-		g_minos[i] = g_all_minos[END];
+	g_minos[i] = g_all_minos[19];
 	free(buf);
 }
-
-uint8_t g_left_to_place;
-t_mino	*g_minos;
 
 int		main(int argc, char **argv)
 {
 	int			fd;
+	int			i;
 
-	g_minos = (t_mino*)malloc(26);
+	g_minos = (t_mino*)malloc(27);
 	g_left_to_place = 0;
 	if (argc != 2)
 		return (0);
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
 		return (1);
-	while(g_minos->type != END)
+	read_minos(fd);
+	i = -1;
+	while(g_minos[++i].type != END)
 	{
 		g_left_to_place++;
-		ft_putnbr(g_minos->type);
-		ft_putchar('\n');
-		g_minos++;
+		printf("%d\n", g_minos[i].type);
 	}
 	ft_putstr("left_to_place: ");
 	ft_putnbr(g_left_to_place);
 	ft_putchar('\n');
+	close(fd);
 }
