@@ -6,15 +6,11 @@
 /*   By: myoung <myoung@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 12:19:47 by myoung            #+#    #+#             */
-/*   Updated: 2016/10/07 16:37:27 by myoung           ###   ########.fr       */
+/*   Updated: 2016/10/07 18:03:29 by myoung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "fillit.h"
-
-
-#include <stdio.h>
-
 
 t_mino			g_all_minos[20] = {
 	{LINE_V, 49, 0, 1, 0, 0x8000800080008000},
@@ -129,16 +125,14 @@ void		read_minos(int fd)
 	while (read_mino(fd, buf))
 	{
 		cur_mino = mino_id(buf);
-		printf("ID: %d\n", cur_mino);
 		g_minos[i] = g_all_minos[cur_mino];
-		printf("Type: %d\n", g_minos[i].type);
 		ft_bzero(buf, 22);
 		i++;
 	}
 	cur_mino = mino_id(buf);
 	g_minos[i] = g_all_minos[cur_mino];
 	i++;
-	g_minos[i] = g_all_minos[19];
+	g_minos[i] = g_all_minos[END];
 	free(buf);
 }
 
@@ -147,7 +141,7 @@ int		main(int argc, char **argv)
 	int			fd;
 	int			i;
 
-	g_minos = (t_mino*)malloc(27);
+	g_minos = (t_mino*)malloc(sizeof(t_mino) * 27);
 	g_left_to_place = 0;
 	if (argc != 2)
 		return (0);
