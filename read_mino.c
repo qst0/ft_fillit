@@ -12,6 +12,10 @@
 
 # include "fillit.h"
 
+
+#include <stdio.h>
+
+
 t_mino			g_all_minos[20] = {
 	{LINE_V, 49, 0, 1, 0, 0x8000800080008000},
 	{LINE_H, 4, 0, 4, 0, 0xF000000000000000},
@@ -151,12 +155,7 @@ int		main(int argc, char **argv)
 	read_minos(fd);
 	i = -1;
 	while(g_minos[++i].type != END)
-	{
 		g_left_to_place++;
-		printf("%d\n", g_minos[i].type);
-	}
-	ft_putstr("left_to_place: ");
-	ft_putnbr(g_left_to_place);
-	ft_putchar('\n');
 	close(fd);
+	fillit();
 }
