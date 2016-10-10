@@ -6,15 +6,11 @@
 /*   By: myoung <myoung@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 12:19:47 by myoung            #+#    #+#             */
-/*   Updated: 2016/10/07 18:03:29 by myoung           ###   ########.fr       */
+/*   Updated: 2016/10/10 12:39:32 by myoung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "fillit.h"
-
-
-#include <stdio.h>
-
 
 t_mino			g_all_minos[20] = {
 	{LINE_V, 49, 0, 1, 0, 0x8000800080008000},
@@ -42,9 +38,12 @@ t_mino			g_all_minos[20] = {
 uint8_t g_left_to_place;
 t_mino	*g_minos;
 
-void	mino_error(void)
+void	mino_error(int status)
 {
-	ft_putstr("error");
+	if (status)
+		ft_putstr("usage: fillit mino_file\n");
+	else
+	ft_putstr("error\n");
 	exit(0);
 }
 
@@ -78,7 +77,7 @@ t_minotype	mino_id(char *buf)
 	IDMINO(buf, "#...##....#", T_LEFT)
 	IDMINO(buf, "#..###", L_UP)
 	IDMINO(buf, "#....#...##", J_LEFT)
-	mino_error();
+	mino_error(0);
 	return (END);
 }
 
@@ -105,7 +104,7 @@ int		read_mino(int fd, char *buf)
 			buf[20] = '.';
 		}
 		else
-			mino_error();	
+			mino_error(0);	
 	}
 	if (has_next)
 		return (1);
@@ -148,13 +147,13 @@ int		main(int argc, char **argv)
 	g_minos = (t_mino*)malloc(sizeof(t_mino) * 27);
 	g_left_to_place = 0;
 	if (argc != 2)
-		return (0);
+		mino_error(1);
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
-		return (1);
+		mino_error(0);
 	read_minos(fd);
 	i = -1;
-	while(g_minos[++i].type != END)
+	while (g_minos[++i].type != END)
 		g_left_to_place++;
 	close(fd);
 	fillit();
