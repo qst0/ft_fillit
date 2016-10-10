@@ -12,6 +12,10 @@
 
 #include "fillit.h"
 
+
+#include <stdio.h>
+
+
 char	*get_string_stamp(t_decode code)
 {
 	int		i;
@@ -29,9 +33,8 @@ char	*get_string_stamp(t_decode code)
 			out[i] = '0';
 		i++;
 		if (i % g_sqr_size == 0)
-			j += 16 - (j % g_sqr_size);
-		else
-			j++;
+			j += 16 - g_sqr_size;
+		j++;
 	}
 	return (out);
 }
@@ -43,6 +46,7 @@ char	*get_output(void)
 	int		i;
 	int		j;
 	int		k;
+	int		l;
 
 	out = (char*)malloc(g_sqr_size * g_sqr_size);
 	i = -1;
@@ -50,11 +54,13 @@ char	*get_output(void)
 		out[i] = '.';
 	out[i] = '\0';
 	i = -1;
-	while (g_decodes[++i].type != END)
+	l = -1;
+	while (g_decodes[++i].type != END && ++l < g_decode_index)
 	{
 		j = g_decodes[i].offset - 1;
 		k = -1;
 		stamp = get_string_stamp(g_decodes[i]);
+		//printf("Stamp: %s\n", stamp);
 		while (out[++j] && stamp[++k])
 			if (stamp[k] != '0')
 				out[j] = stamp[k];
