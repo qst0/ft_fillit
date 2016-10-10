@@ -12,10 +12,6 @@
 
 #include "fillit.h"
 
-
-#include <stdio.h>
-
-
 #define HEX 0x8000000000000000
 #define GETB(z) ((g_grid[z / 64] << (z % 64) & HEX) == HEX)
 
@@ -45,101 +41,98 @@ t_ull		g_inits[13] = {
 	0x0008000800080008
 };
 
-/*static void	print()
-{
-	printf("%llx\n", g_grid[0]);
-	printf("%llx\n", g_grid[1]);
-	printf("%llx\n", g_grid[2]);
-	printf("%llx\n", g_grid[3]);
-}*/
-
 int		attempt_place(int offset, t_mino *mino, uint8_t index)
 {
 	if (CHECK1 && CHECK2)
 	{
-		//printf("ADDING a %d which is index %d at %d\n", mino->type, index, offset);
-		//	Add mino to grid
 		g_grid[offset / 64] |= mino->stamp >> (offset % 64);
 		g_grid[GROSS] |= mino->stamp << (64 - offset % 64);
-		//	Mark it as placed
 		mino->placed = 1;
 		g_left_to_place--;
 		g_decodes[g_decode_index].type = mino->type;
 		g_decodes[g_decode_index].index = index;
 		g_decodes[g_decode_index].offset = (offset / 16) * g_sqr_size + offset % 16;
 		g_decode_index++;
-		//print();
-		//	Try to move forward with it
-		if (backtrack(offset))
+		if (g_left_to_place == 0 || backtrack(index + 1))
 			return (1);
 		else
 		{
-			//printf("REMOVING a %d which is index %d at %d\n", mino->type, index, offset);
-			//	Remove mino from grid
 			g_grid[offset / 64] ^= mino->stamp >> (offset % 64);
 			if (offset / 64 != GROSS)
 				g_grid[GROSS] ^= mino->stamp << (64 - offset % 64);
 			mino->placed = 0;
 			g_left_to_place++;
 			g_decode_index--;
-			//print();
 		}
 
 	}
-	/*else if (CHECK1)
-		printf("Failed check2\n");
-	else if (CHECK2)
-		printf("Failed check1\n");
-	else
-		printf("Failed both checks with %d at %d\n", mino->type, offset);*/
 	return (0);
 }
 
-int		backtrack(int offset)
-{
-	int		i;
+/*
+**	int		backtrack(int offset)
+**	{
+**		int		i;
+**	
+**		i = -1;
+**		//printf("We backtrackin' with offset %d, g_left_to_place%d\n", offset, g_left_to_place);
+**		if (GETB(offset) && g_left_to_place > 0)
+**		{
+**			while (g_minos[++i].type != END)
+**			{
+**				if (g_minos[i].placed || !g_minos[i].added_blanks)
+**					continue ;
+**				//printf("TESTING a %d @ %d\n", (int)g_minos[i].type, offset);
+**				if (attempt_place(offset, &g_minos[i], i))
+**					return (1);
+**			}
+**			//	If we are here then the six didn't work, lets move forward
+**			if (offset < (g_sqr_size - 1) * 16 + g_sqr_size)
+**			{
+**				if ((offset % 16 + 1) % g_sqr_size != 0)
+**					return (backtrack(offset + 1));
+**				else
+**					return (backtrack(offset + (16 - g_sqr_size) + 1));
+**			}
+**		}
+**		else if (g_left_to_place > 0)
+**		{
+**			while (g_minos[++i].type != END)
+**			{
+**				if (g_minos[i].placed)
+**					continue ;
+**				//printf("TESTING a %d @ %d\n", (int)g_minos[i].type, offset);
+**				if (attempt_place(offset, &g_minos[i], i))
+**					return (1);
+**			}
+**			if (offset < (g_sqr_size - 1) * 16 + g_sqr_size)
+**			{
+**				if ((offset % 16 + 1) % g_sqr_size != 0)
+**					return (backtrack(offset + 1));
+**				else
+**					return (backtrack(offset + (16 - g_sqr_size) + 1));
+**			}
+**		}
+**		else
+**			return (1);
+**		return (0);
+**	}
+*/
 
-	i = -1;
-	//printf("We backtrackin' with offset %d, g_left_to_place%d\n", offset, g_left_to_place);
-	if (GETB(offset) && g_left_to_place > 0)
+int		backtrack(int index)
+{
+	int		offset;
+
+	offset = 0;
+	while (offset < (g_sqr_size - 1) * 16 + g_sqr_size)
 	{
-		while (g_minos[++i].type != END)
-		{
-			if (g_minos[i].placed || !g_minos[i].added_blanks)
-				continue ;
-			//printf("TESTING a %d @ %d\n", (int)g_minos[i].type, offset);
-			if (attempt_place(offset, &g_minos[i], i))
+		if ((!GETB(offset) || g_minos[index].added_blanks))
+			if (attempt_place(offset, &g_minos[index], index))
 				return (1);
-		}
-		//	If we are here then the six didn't work, lets move forward
-		if (offset < (g_sqr_size - 1) * 16 + g_sqr_size)
-		{
-			if ((offset % 16 + 1) % g_sqr_size != 0)
-				return (backtrack(offset + 1));
-			else
-				return (backtrack(offset + (16 - g_sqr_size) + 1));
-		}
+		offset++;
+		if ((offset % 16) % g_sqr_size == 0)
+			offset += 16 - g_sqr_size;
 	}
-	else if (g_left_to_place > 0)
-	{
-		while (g_minos[++i].type != END)
-		{
-			if (g_minos[i].placed)
-				continue ;
-			//printf("TESTING a %d @ %d\n", (int)g_minos[i].type, offset);
-			if (attempt_place(offset, &g_minos[i], i))
-				return (1);
-		}
-		if (offset < (g_sqr_size - 1) * 16 + g_sqr_size)
-		{
-			if ((offset % 16 + 1) % g_sqr_size != 0)
-				return (backtrack(offset + 1));
-			else
-				return (backtrack(offset + (16 - g_sqr_size) + 1));
-		}
-	}
-	else
-		return (1);
 	return (0);
 }
 
@@ -174,7 +167,6 @@ void	fillit(void)
 	g_decode_index = 0;
 	while (!backtrack(0))
 	{
-		printf("GOING UP IN SIZE MY MAN\n");
 		g_sqr_size++;
 		i = -1;
 		while (++i < 4)
