@@ -94,7 +94,8 @@ int		read_mino(int fd, char *buf)
 	if ((read_ret = read(fd, buf, 21)))
 	{
 		buf[21] = '\0';
-		if (buf[4] == '\n' && buf[9] == '\n' && buf[14] == '\n' && buf[19] == '\n')
+		if (buf[4] == '\n' && buf[9] == '\n' && buf[14] == '\n'
+			&& buf[19] == '\n')
 		{
 			buf[4] = '.';
 			buf[9] = '.';

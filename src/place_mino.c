@@ -70,52 +70,6 @@ int		attempt_place(int offset, t_mino *mino, uint8_t index)
 	return (0);
 }
 
-/*
-**	int		backtrack(int offset)
-**	{
-**		int		i;
-**	
-**		i = -1;
-**		if (GETB(offset) && g_left_to_place > 0)
-**		{
-**			while (g_minos[++i].type != END)
-**			{
-**				if (g_minos[i].placed || !g_minos[i].added_blanks)
-**					continue ;
-**				if (attempt_place(offset, &g_minos[i], i))
-**					return (1);
-**			}
-**			if (offset < (g_sqr_size - 1) * 16 + g_sqr_size)
-**			{
-**				if ((offset % 16 + 1) % g_sqr_size != 0)
-**					return (backtrack(offset + 1));
-**				else
-**					return (backtrack(offset + (16 - g_sqr_size) + 1));
-**			}
-**		}
-**		else if (g_left_to_place > 0)
-**		{
-**			while (g_minos[++i].type != END)
-**			{
-**				if (g_minos[i].placed)
-**					continue ;
-**				if (attempt_place(offset, &g_minos[i], i))
-**					return (1);
-**			}
-**			if (offset < (g_sqr_size - 1) * 16 + g_sqr_size)
-**			{
-**				if ((offset % 16 + 1) % g_sqr_size != 0)
-**					return (backtrack(offset + 1));
-**				else
-**					return (backtrack(offset + (16 - g_sqr_size) + 1));
-**			}
-**		}
-**		else
-**			return (1);
-**		return (0);
-**	}
-*/
-
 int		backtrack(int index)
 {
 	int		offset;

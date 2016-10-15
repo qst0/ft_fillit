@@ -39,26 +39,23 @@ char	*get_output(void)
 {
 	char	*out;
 	char	*stamp;
-	int		i;
-	int		j;
-	int		k;
-	int		l;
+	int		iters[4];
 
 	out = (char*)malloc(g_sqr_size * g_sqr_size);
-	i = -1;
-	while (++i < g_sqr_size * g_sqr_size)
-		out[i] = '.';
-	out[i] = '\0';
-	i = -1;
-	l = -1;
-	while (g_decodes[++i].type != END && ++l < g_decode_index)
+	iters[0] = -1;
+	while (++iters[0] < g_sqr_size * g_sqr_size)
+		out[iters[0]] = '.';
+	out[iters[0]] = '\0';
+	iters[0] = -1;
+	iters[3] = -1;
+	while (g_decodes[++iters[0]].type != END && ++iters[3] < g_decode_index)
 	{
-		j = g_decodes[i].offset - 1;
-		k = -1;
-		stamp = get_string_stamp(g_decodes[i]);
-		while (out[++j] && stamp[++k])
-			if (stamp[k] != '0')
-				out[j] = stamp[k];
+		iters[1] = g_decodes[iters[0]].offset - 1;
+		iters[2] = -1;
+		stamp = get_string_stamp(g_decodes[iters[0]]);
+		while (out[++iters[1]] && stamp[++iters[2]])
+			if (stamp[iters[2]] != '0')
+				out[iters[1]] = stamp[iters[2]];
 		free(stamp);
 	}
 	return (out);
