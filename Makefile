@@ -15,7 +15,8 @@ CC			=	gcc
 CFLAGS		=	-Wall -Wextra -Werror
 
 SRC			=	read_mino.c place_mino.c print_mino.c
-OBJ			=	$(addprefix $(OBJDIR),$(FILENAMES:.c=.o))
+OBJ			=	$(addprefix $(OBJDIR),$(SRC:.c=.o))
+INC			=	./includes/
 
 LIBFT		=	./libft/libft.a
 FTINC		=	-I ./libft/
@@ -33,10 +34,10 @@ obj:
 	mkdir -p $(OBJDIR)
 
 $(OBJDIR)%.o: $(SRCDIR)%.c
-	gcc $(CFLAGS) $(FTINC) -c $< -o $@
+	gcc $(CFLAGS) $(FTINC) -I $(INC) -c $< -o $@
 
-$(NAME): $(OBJ) libft
-	$(CC) $(CFLAGS) $(OBJ) $(FTLINK) -o $(NAME)
+$(NAME): $(OBJ)
+	$(CC) $(OBJ) $(FTLINK) -o $(NAME)
 
 libft: $(LIBFT)
 

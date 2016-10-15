@@ -25,7 +25,7 @@ FILENAMES	+= ft_strstr.c ft_strsub.c ft_strtrim.c ft_tolower.c ft_toupper.c
 FILENAMES	+= ft_dlstnew.c ft_tabtodlst.c ft_tabtolst.c ft_makereadable.c
 FILENAMES	+= ft_strrev.c ft_memsort.c ft_puttab.c ft_bsearch.c ft_nl.c
 FILENAMES	+= ft_putlst.c ft_tabdup.c ft_strcmplex.c ft_tabsort.c ft_lstnew.c
-FILENAMES	+= ft_realloc.c
+FILENAMES	+= ft_realloc.c ft_strtrimc.c
 
 NAME		= libft.a
 
