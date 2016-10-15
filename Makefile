@@ -14,25 +14,39 @@ NAME		=	fillit
 CC			=	gcc
 CFLAGS		=	-Wall -Wextra -Werror
 
-FILENAMES	=	read_mino.c place_mino.c print_mino.c
+SRC			=	read_mino.c place_mino.c print_mino.c
+OBJ			=	$(addprefix $(OBJDIR),$(FILENAMES:.c=.o))
 
-SOURCES		=	$(FILENAMES)
-OBJECTS		=	$(FILENAMES:.c=.o)
+LIBFT		=	./libft/libft.a
+FTINC		=	-I ./libft/
+FTLINK		=	-L ./libft/ -lft
+
+OBJDIR		=	./obj/
+SRCDIR		=	./src/
+INCDIR		=	./includes/
 
 .PHONY: all clean fclean re
 
-all: $(NAME)
+all: obj $(NAME)
 
-$(NAME): $(OBJECTS) libft/libft.a
-	$(CC) $(CFLAGS) $^ -o $@
+obj:
+	mkdir -p $(OBJDIR)
+
+$(OBJDIR)%.o: $(SRCDIR)%.c
+	gcc $(CFLAGS) $(FTINC) -c $< -o $@
+
+$(NAME): $(OBJ) libft
+	$(CC) $(CFLAGS) $(OBJ) $(FTLINK) -o $(NAME)
+
+libft: $(LIBFT)
+
+$(LIBFT):
+	make -C ./libft/
 
 clean:
-	@rm -rf $(OBJECTS)
+	@rm -rf $(OBJDIR)
 
 fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
-
-%.o: %.c
-	gcc $(CFLAGS) -c $< -o $@

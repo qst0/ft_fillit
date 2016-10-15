@@ -51,7 +51,8 @@ int		attempt_place(int offset, t_mino *mino, uint8_t index)
 		g_left_to_place--;
 		g_decodes[g_decode_index].type = mino->type;
 		g_decodes[g_decode_index].index = index;
-		g_decodes[g_decode_index].offset = (offset / 16) * g_sqr_size + offset % 16;
+		g_decodes[g_decode_index].offset = (offset / 16) * g_sqr_size
+			+ offset % 16;
 		g_decode_index++;
 		if (g_left_to_place == 0 || backtrack(index + 1))
 			return (1);
@@ -75,18 +76,15 @@ int		attempt_place(int offset, t_mino *mino, uint8_t index)
 **		int		i;
 **	
 **		i = -1;
-**		//printf("We backtrackin' with offset %d, g_left_to_place%d\n", offset, g_left_to_place);
 **		if (GETB(offset) && g_left_to_place > 0)
 **		{
 **			while (g_minos[++i].type != END)
 **			{
 **				if (g_minos[i].placed || !g_minos[i].added_blanks)
 **					continue ;
-**				//printf("TESTING a %d @ %d\n", (int)g_minos[i].type, offset);
 **				if (attempt_place(offset, &g_minos[i], i))
 **					return (1);
 **			}
-**			//	If we are here then the six didn't work, lets move forward
 **			if (offset < (g_sqr_size - 1) * 16 + g_sqr_size)
 **			{
 **				if ((offset % 16 + 1) % g_sqr_size != 0)
@@ -101,7 +99,6 @@ int		attempt_place(int offset, t_mino *mino, uint8_t index)
 **			{
 **				if (g_minos[i].placed)
 **					continue ;
-**				//printf("TESTING a %d @ %d\n", (int)g_minos[i].type, offset);
 **				if (attempt_place(offset, &g_minos[i], i))
 **					return (1);
 **			}

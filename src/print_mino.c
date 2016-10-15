@@ -12,10 +12,6 @@
 
 #include "fillit.h"
 
-
-#include <stdio.h>
-
-
 char	*get_string_stamp(t_decode code)
 {
 	int		i;
@@ -60,7 +56,6 @@ char	*get_output(void)
 		j = g_decodes[i].offset - 1;
 		k = -1;
 		stamp = get_string_stamp(g_decodes[i]);
-		//printf("Stamp: %s\n", stamp);
 		while (out[++j] && stamp[++k])
 			if (stamp[k] != '0')
 				out[j] = stamp[k];
