@@ -22,7 +22,7 @@
 
 typedef unsigned long long t_ull;
 
-typedef enum	e_minotype
+typedef enum				e_minotype
 {
 	LINE_V = 0,
 	LINE_H = 1,
@@ -44,9 +44,9 @@ typedef enum	e_minotype
 	L_UP = 17,
 	J_LEFT = 18,
 	END = 19
-}				t_minotype;
+}							t_minotype;
 
-typedef struct	s_mino
+typedef struct				s_mino
 {
 	t_minotype	type;
 	uint8_t		total_offset:6;
@@ -54,25 +54,25 @@ typedef struct	s_mino
 	uint8_t		width_offset:3;
 	uint8_t		placed:1;
 	t_ull		stamp;
-}				t_mino;
+}							t_mino;
 
-typedef struct	s_decode
+typedef struct				s_decode
 {
 	t_minotype	type;
 	uint8_t		index;
 	int			offset;
-}				t_decode;
+}							t_decode;
 
-extern t_mino	*g_minos;
-extern t_ull	*g_grid;
-extern uint8_t	g_left_to_place;
-extern uint8_t	g_sqr_size;
-extern t_decode	*g_decodes;
-extern uint8_t	g_decode_index;
+extern t_mino				*g_minos;
+extern t_ull				*g_grid;
+extern uint8_t				g_left_to_place;
+extern uint8_t				g_sqr_size;
+extern t_decode				*g_decodes;
+extern uint8_t				g_decode_index;
 
 
-int		backtrack(int offset);
-void	print_minos(void);
-void	fillit(void);
+int							backtrack(int offset);
+void						print_minos(void);
+void						fillit(void);
 
 #endif
