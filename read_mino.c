@@ -6,7 +6,7 @@
 /*   By: myoung <myoung@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 12:19:47 by myoung            #+#    #+#             */
-/*   Updated: 2016/10/10 12:39:32 by myoung           ###   ########.fr       */
+/*   Updated: 2016/10/14 23:38:49 by myoung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,10 @@ t_minotype	mino_id(char *buf)
 int		read_mino(int fd, char *buf)
 {
 	int has_next;
+	int	read_ret;
 
 	has_next = 0;
-	if (read(fd, buf, 21))
+	if ((read_ret = read(fd, buf, 21)))
 	{
 		buf[21] = '\0';
 		if (buf[4] == '\n' && buf[9] == '\n' && buf[14] == '\n' && buf[19] == '\n')
@@ -99,8 +100,10 @@ int		read_mino(int fd, char *buf)
 			buf[9] = '.';
 			buf[14] = '.';
 			buf[19] = '.';
-			if (buf[20] == '\n')	
+			if (buf[20] == '\n')
 				has_next = 1;
+			else if (read_ret == 21)
+				mino_error(0);
 			buf[20] = '.';
 		}
 		else
