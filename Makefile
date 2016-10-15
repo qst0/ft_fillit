@@ -28,7 +28,7 @@ INCDIR		=	./includes/
 
 .PHONY: all clean fclean re
 
-all: obj $(NAME)
+all: obj libft $(NAME)
 
 obj:
 	mkdir -p $(OBJDIR)
